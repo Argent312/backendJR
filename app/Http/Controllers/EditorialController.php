@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Editorial;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class EditorialController extends Controller
@@ -11,7 +12,7 @@ class EditorialController extends Controller
      */
     public function index()
     {
-        //
+        $editorial = Editorial::get();
     }
 
     /**
@@ -27,7 +28,11 @@ class EditorialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $editorial = new Editorial;
+        $editorial->name = $request->name;
+        $editorial->delet_at = $request->delet_at;
+        
+        $editorial->saveOrFail();
     }
 
     /**
@@ -35,7 +40,7 @@ class EditorialController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $editorial = DB::table('editorials')->where('id', $id)->get();
     }
 
     /**
@@ -59,6 +64,7 @@ class EditorialController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $editorial = Editorial::findOrFail($id);
+        $editorial->delete ();
     }
 }

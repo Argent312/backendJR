@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -11,7 +12,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $category = Category::get();
     }
 
     /**
@@ -27,7 +28,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = new Category;
+        $category->name = $request->name;
+        $category->delet_at = $request->delet_at;
+        
+        $category->saveOrFail();
     }
 
     /**
@@ -35,7 +40,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $category = DB::table('categories')->where('id', $id)->get(); 
     }
 
     /**
@@ -59,6 +64,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->delete ();
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Ticket;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -11,7 +12,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        //
+        $ticket = Ticket::get();
     }
 
     /**
@@ -27,7 +28,11 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ticket = new Ticket;
+        $ticket->name = $request->name;
+        $ticket->delet_at = $request->delet_at;
+        
+        $ticket->saveOrFail();
     }
 
     /**
@@ -35,7 +40,7 @@ class TicketController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $ticket = DB::table('tickets')->where('id', $id)->get();
     }
 
     /**
@@ -59,6 +64,7 @@ class TicketController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $ticket = Ticket::findOrFail($id);
+        $ticket->delete ();
     }
 }

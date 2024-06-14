@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Writer;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class WriterController extends Controller
@@ -11,7 +12,7 @@ class WriterController extends Controller
      */
     public function index()
     {
-        //
+        $writer = Writer::get();
     }
 
     /**
@@ -27,7 +28,11 @@ class WriterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $writer = new Writer;
+        $writer->name = $request->name;
+        $writer->delet_at = $request->delet_at;
+        
+        $writer->saveOrFail();
     }
 
     /**
@@ -35,7 +40,7 @@ class WriterController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $writer = DB::table('writers')->where('id', $id)->get(); 
     }
 
     /**
@@ -59,6 +64,7 @@ class WriterController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $writer = Writer::findOrFail($id);
+        $writer->delete ();
     }
 }
